@@ -1,0 +1,5 @@
+current directory: /Users/satoshinsuke/workspace/rails/sample_app/vendor/bundle/gems/childprocess-2.0.0/ext
+/Users/satoshinsuke/.rbenv/versions/2.6.4/bin/ruby mkrf_conf.rb
+
+current directory: /Users/satoshinsuke/workspace/rails/sample_app/vendor/bundle/gems/childprocess-2.0.0/ext
+/Users/satoshinsuke/.rbenv/versions/2.6.4/bin/ruby -rrubygems /Users/satoshinsuke/workspace/rails/sample_app/vendor/bundle/gems/rake-13.0.1/exe/rake RUBYARCHDIR\=/Users/satoshinsuke/workspace/rails/sample_app/vendor/bundle/extensions/x86_64-darwin-18/2.6.0-static/childprocess-2.0.0 RUBYLIBDIR\=/Users/satoshinsuke/workspace/rails/sample_app/vendor/bundle/extensions/x86_64-darwin-18/2.6.0-static/childprocess-2.0.0
