@@ -41,4 +41,4 @@ RSpec.describe "Remember me", type: :request do
     end
   end
 
-end 
+end
