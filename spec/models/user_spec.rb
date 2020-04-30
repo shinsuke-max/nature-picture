@@ -53,4 +53,12 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  #cookies暴走対策のテスト chromeとsafari
+  describe "authenticated? should return false for a user with nil digest" do
+    let(:user) { create(:user) }
+    it "digestが存在しない時のauthenticated?のテスト" do
+      expect(user.authenticated?("")).to eq false
+    end
+  end
 end
