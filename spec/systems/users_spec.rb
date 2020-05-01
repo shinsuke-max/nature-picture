@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'users', type: :system do
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+
   describe 'user create a new account' do
     context 'enter a valid values' do
       before do
@@ -31,8 +34,8 @@ RSpec.describe 'users', type: :system do
 
       it 'gets an errors' do
         is_expected.to have_selector('#error_explanation')
-        is_expected.to have_selector('.alert-danger', text: 'The form contains 6 errors.')
-        is_expected.to have_content("Password can't be blank", count: 2)
+        is_expected.to have_selector('.alert-danger', text: 'The form contains 4 errors.')
+        is_expected.to have_content("Password can't be blank", count: 1)
       end
 
       #失敗したときのurl
@@ -41,4 +44,65 @@ RSpec.describe 'users', type: :system do
       #end
     end
   end
+
+
+
+  describe "ユーザー編集" do
+    before do
+      visit user_path(user)
+      valid_login(user)
+      click_link "Account"
+      click_link "Settings"
+    end
+
+    scenario "ユーザーの編集に成功" do
+      fill_in 'Name', with: 'EditTest'
+      fill_in "Email", with: "edit@example.com"
+      click_button "Save changes"
+
+      expect(current_path).to eq user_path(user)
+      expect(user.reload.name).to eq 'EditTest'
+      expect(user.reload.email).to eq "edit@example.com"
+    end
+
+    context "ユーザーの編集に失敗" do
+      scenario "ユーザーのEmail編集に失敗" do
+        fill_in "Email", with: "bar@test"
+        click_button "Save changes"
+
+        expect(page).to have_selector('.alert-danger', text: 'The form contains 1 error.')
+        expect(page).to have_content("Email is invalid")
+        expect(user.reload.email).to_not eq "bar@test"
+      end
+
+      scenario "ユーザーのpassword編集に失敗" do
+        fill_in "Password", with: 'test'
+        fill_in "Confirmation", with: '1234'
+        click_button "Save changes"
+
+        expect(page).to have_selector('.alert-danger', text: 'The form contains 2 errors.')
+      end
+    end
+  end
+
+  describe "ユーザー削除" do
+    context "Adminユーザーの場合" do
+      scenario "ユーザーの削除に成功" do
+        valid_login(user)
+        click_link "Users"
+        expect(page).to have_current_path '/users'
+        #expect(page).to have_link('delete', href: user_path(User.second))
+        expect(page).not_to have_link('delete', href: user_path(user))
+        #expect {
+          #click_link('delete', match: :first)
+          #expect(page.driver.browser.switch_to.alert.text).to eq "You sure?"
+          #page.driver.browser.switch_to.alert.accept
+          #expect(page).to have_css("div.alert.alert-success", text: "User deleted")
+        #}.to change(User, :count).by(-1)
+      end
+    end
+  end
+
+
+
 end
