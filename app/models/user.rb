@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
   #ブラウザ上で保持するためのDBを介さない属性を作成
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
@@ -35,5 +36,9 @@ class User < ApplicationRecord
   def authenticated?(remember_token)
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 end

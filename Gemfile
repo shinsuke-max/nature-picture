@@ -2,9 +2,13 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails',          '6.0.2.2'
+gem 'aws-sdk-s3',     '1.46.0', require: false
 gem 'bcrypt'
 gem 'faker'
-gem 'will_paginate'   
+gem 'will_paginate'
+gem 'active_storage_validations'
+gem 'image_processing'
+gem 'mini_magick'
 gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass', '3.4.1'
 gem 'puma',           '3.12.1'
