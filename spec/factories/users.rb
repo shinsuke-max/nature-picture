@@ -5,6 +5,11 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
     admin { true }
+    factory :user_with_microposts do
+      after(:create) do |user|
+        create(:micropost, user: user)
+      end
+    end
   end
 
   factory :other_user, class: User do

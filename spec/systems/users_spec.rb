@@ -3,6 +3,18 @@ require 'rails_helper'
 RSpec.describe 'users', type: :system do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
+  let(:user_with_microposts) { FactoryBot.create(:user_with_microposts) }
+
+  describe "user show" do
+    before do
+      valid_login(user_with_microposts)
+      visit user_path(user_with_microposts)
+    end
+
+    it "Micropostが表示されていること" do
+      expect(page).to have_content("#{user_with_microposts.name}")
+    end
+  end	
 
   describe 'user create a new account' do
     context 'enter a valid values' do
